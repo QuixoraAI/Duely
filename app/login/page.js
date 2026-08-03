@@ -9,12 +9,14 @@ export default function Login() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
+  const [info, setInfo] = useState("");
   const [loading, setLoading] = useState(false);
   const router = useRouter();
 
   async function handleSubmit(e) {
     e.preventDefault();
     setError("");
+    setInfo("");
     setLoading(true);
 
     if (mode === "signup") {
@@ -28,7 +30,7 @@ export default function Login() {
       if (error) {
         setError(error.message || "This email may already be registered — try logging in instead.");
       } else {
-        setError("Check your email to confirm your account, then log in.");
+        setInfo("Awaiting verification — check your email (and your spam/junk folder) for a confirmation link, then log in.");
         setMode("signin");
       }
     } else {
@@ -80,6 +82,7 @@ export default function Login() {
           </div>
 
           {error && <p className="text-sm text-red-600">{error}</p>}
+          {info && <p className="text-sm text-forest bg-moss/10 border border-moss/30 rounded-lg px-3 py-2">{info}</p>}
 
           <button
             type="submit"
@@ -91,7 +94,7 @@ export default function Login() {
         </form>
 
         <button
-          onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(""); }}
+          onClick={() => { setMode(mode === "signin" ? "signup" : "signin"); setError(""); setInfo(""); }}
           className="text-sm text-ink/55 mt-5 hover:text-ink w-full text-center"
         >
           {mode === "signin" ? "Don't have an account? Sign up" : "Already have an account? Log in"}
